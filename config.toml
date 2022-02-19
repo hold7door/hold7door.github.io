@@ -1,4 +1,4 @@
-baseURL = "https://hold7door.github.io"
+baseURL = "https://hold7door.github.io/"
 languageCode = "en-us"
 title = "Arpit Pathak"
 theme = "hugo-ink"
