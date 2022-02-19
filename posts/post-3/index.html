@@ -1,0 +1,158 @@
+<!doctype html><html>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>Implementing domain based Multi-tenancy - 1 - Arpit Pathak</title><meta name=viewport content="width=device-width,initial-scale=1">
+<meta itemprop=name content="Implementing domain based Multi-tenancy - 1">
+<meta itemprop=description content="This is a tutorial on implementing a domain based multi-tenant application using NextJs and Openresty."><meta itemprop=datePublished content="2022-02-19T02:01:58+05:30">
+<meta itemprop=dateModified content="2022-02-19T02:01:58+05:30">
+<meta itemprop=wordCount content="598">
+<meta itemprop=keywords content="multi-tenant,nextjs,openresty,"><meta property="og:title" content="Implementing domain based Multi-tenancy - 1">
+<meta property="og:description" content="This is a tutorial on implementing a domain based multi-tenant application using NextJs and Openresty.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hold7door.github.io/posts/post-3/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2022-02-19T02:01:58+05:30">
+<meta property="article:modified_time" content="2022-02-19T02:01:58+05:30">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Implementing domain based Multi-tenancy - 1">
+<meta name=twitter:description content="This is a tutorial on implementing a domain based multi-tenant application using NextJs and Openresty.">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel=stylesheet type=text/css>
+<link rel=stylesheet type=text/css media=screen href=https://hold7door.github.iocss/normalize.css>
+<link rel=stylesheet type=text/css media=screen href=https://hold7door.github.iocss/main.css>
+<link id=dark-scheme rel=stylesheet type=text/css href=https://hold7door.github.iocss/dark.css>
+<script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
+<script src=https://hold7door.github.iojs/main.js></script>
+</head>
+<body>
+<div class="container wrapper">
+<div class=header>
+<div class=avatar>
+<a href=https://hold7door.github.io>
+<img src="https://avatars.githubusercontent.com/u/19802812?s=400&u=0d6989dc1f17ce997358a47dcd777cdb3bdc8b52&v=4" alt="Arpit Pathak">
+</a>
+</div>
+<h1 class=site-title><a href=https://hold7door.github.io>Arpit Pathak</a></h1>
+<div class=site-description><p>Thinking.Coding.Learning.</p><nav class="nav social">
+<ul class=flat><li><a href=https://github.com/hold7door title=Github><i data-feather=github></i></a></li><li><a href=/index.xml title=RSS><i data-feather=rss></i></a></li><li><a href=# class=scheme-toggle id=scheme-toggle></a></li></ul>
+</nav>
+</div>
+<nav class=nav>
+<ul class=flat>
+<li>
+<a href=/>Home</a>
+</li>
+<li>
+<a href=/posts>All posts</a>
+</li>
+<li>
+<a href=/about>About</a>
+</li>
+<li>
+<a href=/tags>Tags</a>
+</li>
+</ul>
+</nav>
+</div>
+<div class=post>
+<div class=post-header>
+<div class=meta>
+<div class=date>
+<span class=day>19</span>
+<span class=rest>Feb 2022</span>
+</div>
+</div>
+<div class=matter>
+<h1 class=title>Implementing domain based Multi-tenancy - 1</h1>
+</div>
+</div>
+<div class=markdown>
+<p>In normal scenerios, you build a web-application and host it on a server. Then you purchase a domain which you then link to this server&rsquo;s IP. Other users can then access the web-application using this domain of yours.</p>
+<p>However, often times you also want to give the users the ability to map their own domains to a web application which is hosted on a server which you control. Now the users can open the web-application on their own domains as well. We call this types of web applications as <em>domain based multi-tenant</em> applications and the users as the <em>tenants</em>.</p>
+<p><em>Add note about multi-tenant applications</em></p>
+<p>In this tutorial we will show you how you can build a website which can also be accessed by users using a custom domain of their own choosing.</p>
+<p>I&rsquo;ll make this a 3 part series, in each part we will cover the following things separately-</p>
+<ol>
+<li>Set up NextJs to programmatically create unique pages based on user&rsquo;s custom domain</li>
+<li>Installing and setting up Openresty as your webserver</li>
+<li>Dynamically provisioning SSL certifcates in Openresty</li>
+</ol>
+<p>So, let&rsquo;s get started.</p>
+<h3 id=setting-up-nextjs>Setting up NextJS</h3>
+<p>Let&rsquo;s first set up a NextJs application which can server unique content page based on the custom domain.</p>
+<p>Inside the <em>pages</em> directory create a new dynamic page called - <em>_sites/[site]/index.tsx</em>.<br>
+Inside the <em>pages</em> directory create a file called <em>_middleware.ts</em>.</p>
+<p>Your <em>pages</em> directory should now look something like this -</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>.
+├── _app.tsx
+├── _middleware.tsx
+├── _sites
+│   └── [site]
+│       ├── index.tsx
+
+</code></pre></div><p>By creating the <em>_middleware</em> file you can run code before a request is completed. Based on the incoming request, you can modify the response by rewriting, redirecting, adding headers, or even streaming HTML. <a href=https://nextjs.org/docs/middleware>Read more about NextJs middlewares</a></p>
+<p>Inside the _middleware.tsx add the following code</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>import { NextRequest, NextResponse } from &#39;next/server&#39;
+
+export default function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl
+  // Get hostname
+  const hostname = req.headers.get(&#39;host&#39;)
+
+  // Prevent security issues – users should not be able to canonically access
+  // the pages/sites folder and its respective contents. This can also be done
+  // via rewrites to a custom 404 page
+  if (pathname.startsWith(`/_sites`)) {
+    return new Response(null, { status: 404 })
+  }
+    return NextResponse.rewrite(`/_sites/${currentHost}${pathname}`)
+}
+</code></pre></div><p>Let&rsquo;s understand what the code does when it receives a request for the URL - <a href=https://arpit.example.com/about>https://arpit.example.com/about</a></p>
+<ol>
+<li>The path which is <em>/about</em> is stored inside the <em>pathname</em> variable</li>
+<li>We extract the domain value from the <em>host</em> header of the HTTP request and store it in the <em>hostname</em> variable.</li>
+<li>NextJs supports this awesome ability to rewrite a request path to a different destination path. The line <code>NextResponse.rewrite(</code>/_sites/${currentHost}${pathname}<code>) }</code> does exactly that. For our example the the new path is - <code>_sites/arpit.example.com/about</code></li>
+</ol>
+<p>Inside the <em>_sites/[sites]</em> directory for the pages that you set up, you can get the domain inside your <em>getServerSideProps</em> function. In normal scenerios each domain would map to a unique user in your database. You can now fetch data specific to this user using this domain value. You can do it something like this -</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>const getServerSideProps: GetServerSideProps = async (context) =&gt; {
+  let domain = context.req.headers.host;
+  if (!domain) {
+    return {
+      redirect: &#34;/&#34;,
+      notFound: true,
+      props: {},
+    };
+  }
+    // Make API call and fetch data for this user of this domain and render page
+    // const data = await fetchUserData(domain);
+
+  return {
+    props: {
+        data
+    }
+  };
+};
+
+</code></pre></div><p>Now you have the idea about how you can configure your Frontend application for domain based multi-tenant applications in NextJs. In the next part we will cover how to setup the webserver with Openresty.</p>
+<p>Hope you liked it, See you in the next blog :)</p>
+</div>
+<div class=tags>
+<ul class=flat>
+<li><a href=/tags/multi-tenant>multi-tenant</a></li>
+<li><a href=/tags/nextjs>nextjs</a></li>
+<li><a href=/tags/openresty>openresty</a></li>
+</ul>
+</div><div id=disqus_thread></div>
+<script type=text/javascript>(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='ink-demo',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the </a></noscript>
+<a href=http://disqus.com/ class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</div>
+<div class="footer wrapper">
+<nav class=nav>
+<div>2022 © Copyright notice | Powered by <a href=https://github.com/knadh/hugo-ink>Ink</a> theme on <a href=https://gohugo.io>Hugo</a></div>
+</nav>
+</div>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','UA-123-45','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+<script>feather.replace()</script>
+</body>
+</html>
