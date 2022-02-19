@@ -35,7 +35,7 @@ Let _N_ be length of given array. If we ignore _mn_ and _mx_ then we have _N-2_ 
 
 > Observation 2: If we divide the number line into N-1 equal size intervals then there will be atleast one interval which will be empty.
 
-Proof: Even if we distribute each of the N-2 numbers such that each interval has one number in it then we will have one interval which is empty. If you want some intuition behind it you can read about <a href="https://en.wikipedia.org/wiki/Pigeonhole_principle" target="_blank">Pigeonhole Principle</a>.
+Proof: Even if we distribute each of the N-2 numbers such that each interval has one number in it then we will have one interval which is empty. If you want some intuition behind it you can read about [Pigeonhole Principle](https://en.wikipedia.org/wiki/Pigeonhole_principle).
 
 A thing to notice is that _N-1_ is only a lower bound on the number of intervals. Any number greator than this will achieve same result.
 
@@ -65,7 +65,7 @@ Each interval can be represented by tuple of length 3, **(a, b, c)** where a and
 
 Since number of intervals is of order O(N) and each interval can be updated in constant time, time complexity of this algorithm is: **O(N)**
 
-If you want to test your code you can head over to this Link <a href="https://leetcode.com/problems/maximum-gap/">Maximum Gap</a>.
+If you want to test your code you can head over to this Link [Maximum Gap](https://leetcode.com/problems/maximum-gap/).
 
 For Implementation see Below: --
 

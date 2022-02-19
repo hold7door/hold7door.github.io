@@ -5,7 +5,7 @@ description: "Kickstart Round G 2020 Combination Lock"
 tags: [coding-problem, kickstart]
 ---
 
-This is a reiteration of the official Editorial supported with code. Link to Problem - <a href="https://codingcompetitions.withgoogle.com/kickstart/round/00000000001a0069/0000000000414a24" target="_blank">Combination Lock</a>. _I would suggest you to read the original problem statement first before going through this editorial._
+This is a reiteration of the official Editorial supported with code. Link to Problem -[Combination Lock](https://codingcompetitions.withgoogle.com/kickstart/round/00000000001a0069/0000000000414a24). _I would suggest you to read the original problem statement first before going through this editorial._
 
 ### Problem
 
