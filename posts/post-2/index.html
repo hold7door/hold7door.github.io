@@ -84,7 +84,7 @@
 <blockquote>
 <p>Observation 2: If we divide the number line into N-1 equal size intervals then there will be atleast one interval which will be empty.</p>
 </blockquote>
-<p>Proof: Even if we distribute each of the N-2 numbers such that each interval has one number in it then we will have one interval which is empty. If you want some intuition behind it you can read about Pigeonhole Principle.</p>
+<p>Proof: Even if we distribute each of the N-2 numbers such that each interval has one number in it then we will have one interval which is empty. If you want some intuition behind it you can read about <a href=https://en.wikipedia.org/wiki/Pigeonhole_principle>Pigeonhole Principle</a>.</p>
 <p>A thing to notice is that <em>N-1</em> is only a lower bound on the number of intervals. Any number greator than this will achieve same result.</p>
 <p>Let&rsquo;s see this through an example:</p>
 <p>Let, N=5 and arr = [5, 10, 15, 25, 30]</p>
@@ -102,7 +102,7 @@ So why are we doing this? This leads to our next observation:</p>
 <p>Each interval can be represented by tuple of length 3, <strong>(a, b, c)</strong> where a and b are the minimum and maximum of this interval and c is the count of numbers of this interval.</p>
 <h5 id=time-complexity>Time complexity</h5>
 <p>Since number of intervals is of order O(N) and each interval can be updated in constant time, time complexity of this algorithm is: <strong>O(N)</strong></p>
-<p>If you want to test your code you can head over to this Link Maximum Gap.</p>
+<p>If you want to test your code you can head over to this Link <a href=https://leetcode.com/problems/maximum-gap/>Maximum Gap</a>.</p>
 <p>For Implementation see Below: &ndash;</p>
 <div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>class Solution:
     def maximumGap(self, nums: List[int]) -&gt; int:
