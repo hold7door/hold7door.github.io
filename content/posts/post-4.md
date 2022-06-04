@@ -58,11 +58,11 @@ $ yum install pcre-devel openssl-devel gcc curl
 
 ```
 
-This page from DigitalOcean does a good job for instructing on how you can download and install Openresty:
+This page from DigitalOcean does a good job on instructing how you can download and install Openresty -
 
 [https://www.digitalocean.com/community/tutorials/how-to-use-the-openresty-web-framework-for-nginx-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-use-the-openresty-web-framework-for-nginx-on-ubuntu-16-04)
 
-**Important: If you followed the above link, there are a few caveats that you need to take care:**
+**Important: If you followed the above link, there are a few caveats that you need to take care of**
 
 1. We need to build openresty with http2. So the command to configure and build should be: `./configure -j2 --with-pcre-jit --with-ipv6 --with-http_v2_module`. If its a success the output should be something like (check the paths to the nginx files and binaries)
 
