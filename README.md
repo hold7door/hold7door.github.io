@@ -1,4 +1,4 @@
 # My Blog
 
 TODO:
- - Setup Discuss for comments
+ - Setup Disqus for comments
