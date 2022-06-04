@@ -22,7 +22,7 @@ In this tutorial we will show you how you can build a website which can also be 
 I'll make this a 2 part series, in each part we will cover the following things separately-
 
 1. Set up NextJs to programmatically create unique pages based on user's custom domain (this post)
-2. Setting up Openresty as your webserver and dynamically provisioning SSL certifcates ([Part 2](https://hold7door.github.io/posts/post-3/))
+2. Setting up Openresty as your webserver and dynamically provisioning SSL certifcates ([Part 2](https://hold7door.github.io/posts/post-4/))
 
 So, let's get started.
 
