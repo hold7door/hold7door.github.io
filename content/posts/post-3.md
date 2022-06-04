@@ -9,21 +9,26 @@ In normal scenerios, you build a web-application and host it on a server. Then y
 
 However, often times you also want to give the users the ability to map their own domains to a web application which is hosted on a server which you control. Now the users can open the web-application on their own domains as well. We call this types of web applications as _domain based multi-tenant_ applications and the users as the _tenants_.
 
-_Add note about multi-tenant applications_
+```
+From Wikipedia -
+
+Software multitenancy is a software architecture in which a single instance of software runs on a server and serves multiple tenants.
+Systems designed in such manner are "shared" (rather than "dedicated" or "isolated").
+A tenant is a group of users who share a common access with specific privileges to the software instance.
+```
 
 In this tutorial we will show you how you can build a website which can also be accessed by users using a custom domain of their own choosing.
 
-I'll make this a 3 part series, in each part we will cover the following things separately-
+I'll make this a 2 part series, in each part we will cover the following things separately-
 
-1. Set up NextJs to programmatically create unique pages based on user's custom domain
-2. Installing and setting up Openresty as your webserver
-3. Dynamically provisioning SSL certifcates in Openresty
+1. Set up NextJs to programmatically create unique pages based on user's custom domain (this post)
+2. Setting up Openresty as your webserver and dynamically provisioning SSL certifcates ([Part 2](https://hold7door.github.io/posts/post-3/))
 
 So, let's get started.
 
 ### Setting up NextJS
 
-Let's first set up a NextJs application which can server unique content page based on the custom domain.
+Let's first set up a NextJs application which can serve unique content page based on the custom domain.
 
 Inside the _pages_ directory create a new dynamic page called - _\_sites/[site]/index.tsx_.  
 Inside the _pages_ directory create a file called _\_middleware.ts_.
