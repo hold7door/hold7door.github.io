@@ -97,7 +97,7 @@ OpenResty workers should run as this user, so inside the nginx.conf file make su
 
 Great! Now we have Openresty up and running. Now let's get to the good part and see how we can use the inbuilt Lua integration of Openresty for dynamically creating SSL certificates for custom domains.
 
-#### Installing LuaRocks and lua-resty-auto-ssl
+### Installing LuaRocks and lua-resty-auto-ssl
 
 The [lua-resty-auto-ssl](https://github.com/fffonion/lua-resty-openssl) plugin for OpenResty mentions itself as a -
 
@@ -149,7 +149,7 @@ $ sudo chown www-data /etc/resty-auto-ssl
 
 Cool! Now the final part remaining is to see how we can set up our nginx configuration to use this plugin to provision certificates.
 
-#### Configuring the Web Server
+### Configuring the Web Server
 
 Inside the `http` block of our nginx.conf file we need to have the following lines -
 
@@ -273,7 +273,7 @@ location / {
 }
 ```
 
-#### Conclusion
+### Conclusion
 
 Now any user who wants to map their custom domain to our application can add an **A record** and point it to our servers IP (which we need to provide them).
 
