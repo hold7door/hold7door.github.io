@@ -56,9 +56,9 @@ icon = "github"
 url = "https://github.com/hold7door"
 
 [[params.social]]
-name = "RSS"
-icon = "rss"
-url = "/index.xml"
+name = "Twitter"
+icon = "twitter"
+url = "https://twitter.com/AP_zahlen"
 
 [taxonomies]
    tag = "tags"

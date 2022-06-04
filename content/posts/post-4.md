@@ -284,6 +284,6 @@ Some follow ups you might have like -
 1. How to map CNAME ?
 2. What to do in the case where we have multiple servers distributed accross the globe?
 
-Connect me on twitter and I'll answer those. If needed I'll write another blog post about it in the future.
+Connect with me on twitter where I'll answer all queries. If needed I'll write another blog post about it in the future.
 
 Hope you liked it, See you in the next blog :)
