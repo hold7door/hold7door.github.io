@@ -1,263 +1,96 @@
-<!doctype html><html>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge"><title>Kickstart Round G 2020 Combination Lock - Arpit Pathak</title><meta name=viewport content="width=device-width,initial-scale=1">
-<meta itemprop=name content="Kickstart Round G 2020 Combination Lock">
-<meta itemprop=description content="Kickstart Round G 2020 Combination Lock"><meta itemprop=datePublished content="2021-01-02T02:01:58+05:30">
-<meta itemprop=dateModified content="2021-01-02T02:01:58+05:30">
-<meta itemprop=wordCount content="1501">
-<meta itemprop=keywords content="coding-problem,kickstart,"><meta property="og:title" content="Kickstart Round G 2020 Combination Lock">
-<meta property="og:description" content="Kickstart Round G 2020 Combination Lock">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://hold7door.github.io/posts/post-1/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-01-02T02:01:58+05:30">
-<meta property="article:modified_time" content="2021-01-02T02:01:58+05:30">
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="Kickstart Round G 2020 Combination Lock">
-<meta name=twitter:description content="Kickstart Round G 2020 Combination Lock">
-<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel=stylesheet type=text/css>
-<link rel=stylesheet type=text/css media=screen href=https://hold7door.github.io/css/normalize.css>
-<link rel=stylesheet type=text/css media=screen href=https://hold7door.github.io/css/main.css>
-<link id=dark-scheme rel=stylesheet type=text/css href=https://hold7door.github.io/css/dark.css>
-<script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
-<script src=https://hold7door.github.io/js/main.js></script>
-</head>
-<body>
-<div class="container wrapper">
-<div class=header>
-<div class=avatar>
-<a href=https://hold7door.github.io/>
-<img src="https://avatars.githubusercontent.com/u/19802812?s=400&u=0d6989dc1f17ce997358a47dcd777cdb3bdc8b52&v=4" alt="Arpit Pathak">
-</a>
-</div>
-<h1 class=site-title><a href=https://hold7door.github.io/>Arpit Pathak</a></h1>
-<div class=site-description><p>Thinking | Coding | Learning</p><nav class="nav social">
-<ul class=flat><li><a href=https://github.com/hold7door title=Github><i data-feather=github></i></a></li><li><a href=/index.xml title=RSS><i data-feather=rss></i></a></li><li><a href=# class=scheme-toggle id=scheme-toggle></a></li></ul>
-</nav>
-</div>
-<nav class=nav>
-<ul class=flat>
-<li>
-<a href=/>Home</a>
-</li>
-<li>
-<a href=/posts>Blog</a>
-</li>
-<li>
-<a href=/about>About</a>
-</li>
-<li>
-<a href=/tags>Tags</a>
-</li>
-</ul>
-</nav>
-</div>
-<div class=post>
-<div class=post-header>
-<div class=meta>
-<div class=date>
-<span class=day>02</span>
-<span class=rest>Jan 2021</span>
-</div>
-</div>
-<div class=matter>
-<h1 class=title>Kickstart Round G 2020 Combination Lock</h1>
-</div>
-</div>
-<div class=markdown>
-<p>This is a reiteration of the official Editorial supported with code. Link to Problem -<a href=https://codingcompetitions.withgoogle.com/kickstart/round/00000000001a0069/0000000000414a24>Combination Lock</a>. <em>I would suggest you to read the original problem statement first before going through this editorial.</em></p>
-<h3 id=problem>Problem</h3>
-<p>Your are given an array of numbers of length <strong>W</strong> and an integer <strong>N</strong>. Each number of array, let&rsquo;s say <strong>Wi</strong> is in range <strong>1 &lt;= Wi &lt;= N</strong>.
-In one move you can select any number from the array and increase/decrease that number by 1, <em>wrapping around between 1 and N</em>. For example, let&rsquo;s N=6, and we choose 6. If we increase it should wrap around to 1. Similarly, if 1 is decreased, it becomes 6.</p>
-<p><strong>You need to find the minimum number of moves to make all elements of array equal.</strong></p>
-<h5 id=constraints>Constraints</h5>
-<p>1 &lt;= W &lt;= 102<br>
-2 &lt;= N &lt;= 109</p>
-<h4 id=a-brute-force-solution>A Brute Force Solution</h4>
-<blockquote>
-<p>Observation 1: The moves performed at any index/position in the array is independent of moves performed at any other position.</p>
-</blockquote>
-<p>If we choose a target value <strong>T</strong> and we want each element to be equal to T, then the moves we perform at any position in array won&rsquo;t affect moves performed at other positions. Thus, the number of moves at every position can be calculated separately.
-There are N possible values of T i.e 1 &lt;= T &lt;= N.</p>
-<blockquote>
-<p>Observation 2: There are two possible &lsquo;number of moves&rsquo; for a value <em>X</em> to reach T. If T >= X, they are: <strong>T - X and N - (T - X)</strong>. If X >= T then <strong>X - T and N - (X - T)</strong>.</p>
-</blockquote>
-<p>Using above two observation we can construct the brute force solution as</p>
-<ul>
-<li>For each value of T, 1 &lt;= T &lt;= N
-<ul>
-<li>Calculate number of moves for each position separately and add all of them. Number of moves at each position should be minimum of the two possible values (Observation 2).</li>
-</ul>
-</li>
-<li>Find minimum of the total moves for all values of T.</li>
-</ul>
-<p>Time complexity of this approach is: <strong>O(N * W)</strong>. We are performing W operations for each value of N.<br>
-Unfortunately, this is not sufficient to pass the given constraints.<br>
-Continue, if you have properly understood the brute force solution.</p>
-<h4 id=improvement-of-the-brute-force-solution>Improvement of the brute force solution</h4>
-<blockquote>
-<p>Observation 3: A major observation is that we can get the minimum possible moves by bringing all the array values to one of the initial values of the array.</p>
-</blockquote>
-<h5 id=proof>Proof</h5>
-<p>First let&rsquo;s sort the array. Now, consider a value <strong>val</strong> that is not equal to any of the initial values of array and we want <em>val</em> to be the target value. Also, consider two numbers <em>from the initial array</em>: <strong>Xi</strong> and <strong>Xj</strong> such that Xi is the last number smaller than <em>val</em> and Xj is the first number larger than <em>val</em>.</p>
-<p>To optimally reach <em>val</em> each number from initial array has to first reach Xi or Xj. After performing those operations, let n1 numbers are at Xi and n2 numbers are at Xj. Then the final number of moves for all numbers to reach <em>val</em> would be equal to:<br>
-(val - Xi) _ n1 + (Xj - val) _ n2.<br>
-We can show that this can always be improved by shifting <em>val</em> to either Xi or Xj</p>
-<ol>
-<li>If n1 &lt; n2 then we can shift val to Xj and the number of operations would become (val - Xi) _ n1 + (Xj - val) _ n1. We are transforming numbers at Xi to value Xj. The numbers at Xj are already at correct place so no operations for them. Similarly,</li>
-<li>If n2 &lt;= n1 then we can shift val to Xi and the number of operations would become (val - Xi) _ n2 + (Xj - val) _ n2</li>
-</ol>
-<p>If you compare then in both cases we have lesser number operations than keeping <em>val</em> unchanged.</p>
-<h4 id=the-optimal-solution>The Optimal Solution</h4>
-<p>So, now we know that the target value is one of the intial values of the array.</p>
-<p><em>Remember that the array is sorted.</em></p>
-<blockquote>
-<p>Observation 4: Consider, one of the initial values as target value <strong>T</strong> and two numbers <strong>X1</strong> and <strong>X2</strong> such that X1 &lt; X2 &lt;= T. Then, it is never possible that X1 reaches T by performing increment operations only and X2 reaches T by performing decrement operations only. <em>If the optimal way for X1 to reach T is by perfoming increment operations then X2 would also prefer increasing as it closer to T than X1</em>.</p>
-</blockquote>
-<p>So, from this we can also conclude that -</p>
-<ol>
-<li>There exists some position <strong>i</strong>, <em>0 &lt;= i &lt;= t</em> such that for all <em>j</em>, <em>0 &lt;= j &lt; i</em> values at position <em>j</em> prefer decreasing and for all k, <em>i &lt;= k &lt;= t</em> would prefer increasing.</li>
-<li>There exists some position <strong>u</strong>, <em>t &lt;= u &lt; W</em> such that for all <em>v</em>, <em>t &lt;= v &lt;= u</em> values at position <em>v</em> prefer decreasing and for all w, <em>u &lt; w &lt; W</em> would prefer increasing.</li>
-</ol>
-<p><strong>t</strong> is the index of <em>T</em>.
-<strong>We can binary search for <em>i</em> and <em>u</em> for every <em>t</em> we choose.</strong><br>
-Let&rsquo;s see how to find <em>i</em> for certain <em>t</em>. <em>u</em> can be found similarly.</p>
-<p>Consider the following scenerio. We know that <em>i</em> is in range [0, t]. Consider mid point of this range let&rsquo;s say <em>x</em>.<br>
-<img src=/static/3.png alt=Image></p>
-<p>If, <code>T-arr[x] > N - (T-arr[x])</code> this means that value at x will increase to reach T. This also means that all positions greater than <em>x</em> would also prefer increasing.<br>
-So, from this we can say that either <code>i = x</code> or <code>i &lt; x</code> and we can omit the range [x, t]. We have omitted exactly half of the range which is the essence behind Binary Search. We proceed similarly with the other half until <em>i</em> is found. (See code for implementation details)</p>
-<p>Now, let&rsquo;s calculate total moves once we know <em>i</em> and <em>u</em>.<br>
-Let&rsquo;s also assume that we have a function <strong>getSum(m, n)</strong> which returns <strong>arr[m] + arr[m+1] &mldr; arr[n]</strong> i.e sum of all numbers from postion <em>m</em> to <em>n</em> (inclusive).
-Extending on the above points we have</p>
-<ol>
-<li>
-<p>For range, 0 &lt;= j &lt; i, we have, (Recall Observation 2)</p>
-<pre><code>sum1 = (N - T + arr[i-1]) + (N - T + arr[i-2]) ...
+<!doctype html><html><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kickstart Round G 2020 Combination Lock - Arpit Pathak</title><meta name=viewport content="width=device-width,initial-scale=1"><meta itemprop=name content="Kickstart Round G 2020 Combination Lock"><meta itemprop=description content="Kickstart Round G 2020 Combination Lock"><meta itemprop=datePublished content="2021-01-02T02:01:58+05:30"><meta itemprop=dateModified content="2021-01-02T02:01:58+05:30"><meta itemprop=wordCount content="1518"><meta itemprop=keywords content="coding-problem,kickstart,"><meta property="og:title" content="Kickstart Round G 2020 Combination Lock"><meta property="og:description" content="Kickstart Round G 2020 Combination Lock"><meta property="og:type" content="article"><meta property="og:url" content="https://hold7door.github.io/posts/post-1/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-01-02T02:01:58+05:30"><meta property="article:modified_time" content="2021-01-02T02:01:58+05:30"><meta name=twitter:card content="summary"><meta name=twitter:title content="Kickstart Round G 2020 Combination Lock"><meta name=twitter:description content="Kickstart Round G 2020 Combination Lock"><link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel=stylesheet type=text/css><link rel=stylesheet type=text/css media=screen href=https://hold7door.github.io/css/normalize.css><link rel=stylesheet type=text/css media=screen href=https://hold7door.github.io/css/main.css><link id=dark-scheme rel=stylesheet type=text/css href=https://hold7door.github.io/css/dark.css><script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
+<script src=https://hold7door.github.io/js/main.js></script></head><body><div class="container wrapper"><div class=header><div class=avatar><a href=https://hold7door.github.io/><img src="https://avatars.githubusercontent.com/u/19802812?s=400&u=0d6989dc1f17ce997358a47dcd777cdb3bdc8b52&v=4" alt="Arpit Pathak"></a></div><h1 class=site-title><a href=https://hold7door.github.io/>Arpit Pathak</a></h1><div class=site-description><p>Thinking | Coding | Learning</p><nav class="nav social"><ul class=flat><li><a href=https://github.com/hold7door title=Github><i data-feather=github></i></a></li><li><a href=/index.xml title=RSS><i data-feather=rss></i></a></li><li><a href=# class=scheme-toggle id=scheme-toggle></a></li></ul></nav></div><nav class=nav><ul class=flat><li><a href=/>Home</a></li><li><a href=/posts>Blog</a></li><li><a href=/about>About</a></li><li><a href=/tags>Tags</a></li></ul></nav></div><div class=post><div class=post-header><div class=meta><div class=date><span class=day>02</span>
+<span class=rest>Jan 2021</span></div></div><div class=matter><h1 class=title>Kickstart Round G 2020 Combination Lock</h1></div></div><div class=markdown><p>This is a reiteration of the official Editorial supported with code. Link to Problem -<a href=https://codingcompetitions.withgoogle.com/kickstart/round/00000000001a0069/0000000000414a24>Combination Lock</a>. <em>I would suggest you to read the original problem statement first before going through this editorial.</em></p><h3 id=problem>Problem</h3><p>Your are given an array of numbers of length <strong>W</strong> and an integer <strong>N</strong>. Each number of array, let&rsquo;s say <strong>Wi</strong> is in range <strong>1 &lt;= Wi &lt;= N</strong>.
+In one move you can select any number from the array and increase/decrease that number by 1, <em>wrapping around between 1 and N</em>. For example, let&rsquo;s N=6, and we choose 6. If we increase it should wrap around to 1. Similarly, if 1 is decreased, it becomes 6.</p><p><strong>You need to find the minimum number of moves to make all elements of array equal.</strong></p><h5 id=constraints>Constraints</h5><p>1 &lt;= W &lt;= 102<br>2 &lt;= N &lt;= 109</p><h4 id=a-brute-force-solution>A Brute Force Solution</h4><blockquote><p>Observation 1: The moves performed at any index/position in the array is independent of moves performed at any other position.</p></blockquote><p>If we choose a target value <strong>T</strong> and we want each element to be equal to T, then the moves we perform at any position in array won&rsquo;t affect moves performed at other positions. Thus, the number of moves at every position can be calculated separately.
+There are N possible values of T i.e 1 &lt;= T &lt;= N.</p><blockquote><p>Observation 2: There are two possible &rsquo;number of moves&rsquo; for a value <em>X</em> to reach T. If T >= X, they are: <strong>T - X and N - (T - X)</strong>. If X >= T then <strong>X - T and N - (X - T)</strong>.</p></blockquote><p>Using above two observation we can construct the brute force solution as</p><ul><li>For each value of T, 1 &lt;= T &lt;= N<ul><li>Calculate number of moves for each position separately and add all of them. Number of moves at each position should be minimum of the two possible values (Observation 2).</li></ul></li><li>Find minimum of the total moves for all values of T.</li></ul><p>Time complexity of this approach is: <strong>O(N * W)</strong>. We are performing W operations for each value of N.<br>Unfortunately, this is not sufficient to pass the given constraints.<br>Continue, if you have properly understood the brute force solution.</p><h4 id=improvement-of-the-brute-force-solution>Improvement of the brute force solution</h4><blockquote><p>Observation 3: A major observation is that we can get the minimum possible moves by bringing all the array values to one of the initial values of the array.</p></blockquote><h5 id=proof>Proof</h5><p>First let&rsquo;s sort the array. Now, consider a value <strong>val</strong> that is not equal to any of the initial values of array and we want <em>val</em> to be the target value. Also, consider two numbers <em>from the initial array</em>: <strong>Xi</strong> and <strong>Xj</strong> such that Xi is the last number smaller than <em>val</em> and Xj is the first number larger than <em>val</em>.</p><p>To optimally reach <em>val</em> each number from initial array has to first reach Xi or Xj. After performing those operations, let n1 numbers are at Xi and n2 numbers are at Xj. Then the final number of moves for all numbers to reach <em>val</em> would be equal to:<br>(val - Xi) _ n1 + (Xj - val) _ n2.<br>We can show that this can always be improved by shifting <em>val</em> to either Xi or Xj</p><ol><li>If n1 &lt; n2 then we can shift val to Xj and the number of operations would become (val - Xi) _ n1 + (Xj - val) _ n1. We are transforming numbers at Xi to value Xj. The numbers at Xj are already at correct place so no operations for them. Similarly,</li><li>If n2 &lt;= n1 then we can shift val to Xi and the number of operations would become (val - Xi) _ n2 + (Xj - val) _ n2</li></ol><p>If you compare then in both cases we have lesser number operations than keeping <em>val</em> unchanged.</p><h4 id=the-optimal-solution>The Optimal Solution</h4><p>So, now we know that the target value is one of the intial values of the array.</p><p><em>Remember that the array is sorted.</em></p><blockquote><p>Observation 4: Consider, one of the initial values as target value <strong>T</strong> and two numbers <strong>X1</strong> and <strong>X2</strong> such that X1 &lt; X2 &lt;= T. Then, it is never possible that X1 reaches T by performing increment operations only and X2 reaches T by performing decrement operations only. <em>If the optimal way for X1 to reach T is by perfoming increment operations then X2 would also prefer increasing as it closer to T than X1</em>.</p></blockquote><p>So, from this we can also conclude that -</p><ol><li>There exists some position <strong>i</strong>, <em>0 &lt;= i &lt;= t</em> such that for all <em>j</em>, <em>0 &lt;= j &lt; i</em> values at position <em>j</em> prefer decreasing and for all k, <em>i &lt;= k &lt;= t</em> would prefer increasing.</li><li>There exists some position <strong>u</strong>, <em>t &lt;= u &lt; W</em> such that for all <em>v</em>, <em>t &lt;= v &lt;= u</em> values at position <em>v</em> prefer decreasing and for all w, <em>u &lt; w &lt; W</em> would prefer increasing.</li></ol><p><strong>t</strong> is the index of <em>T</em>.
+<strong>We can binary search for <em>i</em> and <em>u</em> for every <em>t</em> we choose.</strong><br>Let&rsquo;s see how to find <em>i</em> for certain <em>t</em>. <em>u</em> can be found similarly.</p><p>Consider the following scenerio. We know that <em>i</em> is in range [0, t]. Consider mid point of this range let&rsquo;s say <em>x</em>.<br><img src=/static/3.png alt=Image></p><p>If, <code>T-arr[x] > N - (T-arr[x])</code> this means that value at x will increase to reach T. This also means that all positions greater than <em>x</em> would also prefer increasing.<br>So, from this we can say that either <code>i = x</code> or <code>i &lt; x</code> and we can omit the range [x, t]. We have omitted exactly half of the range which is the essence behind Binary Search. We proceed similarly with the other half until <em>i</em> is found. (See code for implementation details)</p><p>Now, let&rsquo;s calculate total moves once we know <em>i</em> and <em>u</em>.<br>Let&rsquo;s also assume that we have a function <strong>getSum(m, n)</strong> which returns <strong>arr[m] + arr[m+1] &mldr; arr[n]</strong> i.e sum of all numbers from postion <em>m</em> to <em>n</em> (inclusive).
+Extending on the above points we have</p><ol><li><p>For range, 0 &lt;= j &lt; i, we have, (Recall Observation 2)</p><pre><code>sum1 = (N - T + arr[i-1]) + (N - T + arr[i-2]) ...
 
 sum1 = i * (N - T) + (arr[i-1] + arr[i-2] .. + arr[0])
 
 sum1 = i * (N - T) + getSum(0, i-1)
-</code></pre>
-</li>
-<li>
-<p>For i &lt;= k &lt;= t,</p>
-<pre><code>sum2 = (T - arr[i]) + (T - arr[i+1]) ..
+</code></pre></li><li><p>For i &lt;= k &lt;= t,</p><pre><code>sum2 = (T - arr[i]) + (T - arr[i+1]) ..
 
 sum2 = T * (t - i + 1) - getSum(i, t)
-</code></pre>
-</li>
-</ol>
-<p>Similarly, 3. For t &lt;= v &lt;= u, <code>sum3 = getSum(t, u) - (u - t + 1) * T</code></p>
-<ol start=4>
-<li>For u &lt; w &lt; W, <code>sum4 = (N + T) * (W - u - 1) - getSum(u+1, W-1)</code></li>
-</ol>
-<p>Thus the total moves for target value T at position t denoted by <em>sum</em> is,<br>
-<code>sum = sum1 + sum2 + sum3 + sum4</code></p>
-<p>Also, <em>getSum(m, n) = prefixSum[n] - prefixSum[m-1]</em><br>
-where, prefix[x] is the sum of elements with index less than equal to x. We can preprocess and store prefix[x] to achive a constant time operation to calculate <em>sum</em>.</p>
-<p>So, we calculate <em>sum</em> for all possible initial values and take minimum of them which is the answer.</p>
-<p>Time complexity of this solution is: <strong>O(W * log W)</strong></p>
-<p><strong>For implemention see below -</strong></p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-typedef long long ll;
-
-
-int w, n;
-vector&lt;ll&gt; prefix;
-
-ll getSum(int l, int r){
-	if (l &lt;= r){
-		if (l &lt;= 0) return prefix[r];
-		return prefix[r] - prefix[l-1];
-	}
-	return 0;
-}
-
-int main(){
-	int t, tc = 0;
-	cin &gt;&gt; t;
-	while (t--){
-		tc ++;
-		cin &gt;&gt; w &gt;&gt; n;
-		vector&lt;ll&gt; arr(w);
-		for (int i=0; i&lt;w; i++)
-			cin &gt;&gt; arr[i];
-		sort(arr.begin(), arr.end());
-		prefix = vector&lt;ll&gt;(w, 0);
-		prefix[0] = arr[0];
-		for (int i=1; i&lt;w; i++){
-			prefix[i] = prefix[i-1] + arr[i];
-		}
-
-		ll res = LLONG_MAX;
-		for (int i=0; i&lt;w; i++){
-			ll op1, op2;
-			int p, q;
-
-			int lo = 0, hi = i;
-			while (lo &lt;= hi){
-				int mid = lo + (hi - lo) / 2;
-				op1 = arr[i] - arr[mid];
-				op2 = n - op1;
-				if (op1 &lt;= op2){
-					p = mid;
-					hi = mid - 1;
-				}
-				else{
-					lo = mid + 1;
-				}
-			}
-
-			lo = i, hi = w - 1;
-			while(lo &lt;= hi){
-				int mid = lo + (hi - lo) / 2;
-				op1 = arr[mid] - arr[i];
-				op2 = n - op1;
-				if (op1 &lt;= op2){
-					q = mid;
-					lo = mid + 1;
-				}
-				else{
-					hi = mid - 1;
-				}
-			}
-			ll sm1 = 0, sm2 = 0, ans = 0;
-			sm1 = (i - p + 1) * arr[i] - getSum(p, i);
-			sm2 = p * (n - arr[i]) + getSum(0, p-1);
-			ans += sm1 + sm2;
-
-			sm1 = 0, sm2 = 0;
-			sm1 = getSum(i, q) - (q - i + 1) * arr[i];
-			sm2 = (n + arr[i]) * (w - q - 1) - getSum(q+1, w-1);
-			ans += sm1 + sm2;
-			res = min(res, ans);
-		}
-		cout &lt;&lt; &#34;Case #&#34; &lt;&lt; tc &lt;&lt; &#34;: &#34; &lt;&lt; res &lt;&lt; endl;
-	}
-}
-</code></pre></div>
-</div>
-<div class=tags>
-<ul class=flat>
-<li><a href=/tags/coding-problem>coding-problem</a></li>
-<li><a href=/tags/kickstart>kickstart</a></li>
-</ul>
-</div><div id=disqus_thread></div>
-<script type=text/javascript>(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='ink-demo',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the </a></noscript>
-<a href=http://disqus.com/ class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-</div>
-<div class="footer wrapper">
-<nav class=nav>
-<div>2022 © Copyright notice | Powered by <a href=https://github.com/knadh/hugo-ink>Ink</a> theme on <a href=https://gohugo.io>Hugo</a></div>
-</nav>
-</div>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','UA-123-45','auto'),ga('send','pageview'))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-<script>feather.replace()</script>
-</body>
-</html>
+</code></pre></li></ol><p>Similarly, 3. For t &lt;= v &lt;= u, <code>sum3 = getSum(t, u) - (u - t + 1) * T</code></p><ol start=4><li>For u &lt; w &lt; W, <code>sum4 = (N + T) * (W - u - 1) - getSum(u+1, W-1)</code></li></ol><p>Thus the total moves for target value T at position t denoted by <em>sum</em> is,<br><code>sum = sum1 + sum2 + sum3 + sum4</code></p><p>Also, <em>getSum(m, n) = prefixSum[n] - prefixSum[m-1]</em><br>where, prefix[x] is the sum of elements with index less than equal to x. We can preprocess and store prefix[x] to achive a constant time operation to calculate <em>sum</em>.</p><p>So, we calculate <em>sum</em> for all possible initial values and take minimum of them which is the answer.</p><p>Time complexity of this solution is: <strong>O(W * log W)</strong></p><p><strong>For implemention see below -</strong></p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>#include &lt;bits/stdc++.h&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>using namespace std;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>typedef long long ll;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>int w, n;
+</span></span><span style=display:flex><span>vector&lt;ll&gt; prefix;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>ll getSum(int l, int r){
+</span></span><span style=display:flex><span>	if (l &lt;= r){
+</span></span><span style=display:flex><span>		if (l &lt;= 0) return prefix[r];
+</span></span><span style=display:flex><span>		return prefix[r] - prefix[l-1];
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	return 0;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>int main(){
+</span></span><span style=display:flex><span>	int t, tc = 0;
+</span></span><span style=display:flex><span>	cin &gt;&gt; t;
+</span></span><span style=display:flex><span>	while (t--){
+</span></span><span style=display:flex><span>		tc ++;
+</span></span><span style=display:flex><span>		cin &gt;&gt; w &gt;&gt; n;
+</span></span><span style=display:flex><span>		vector&lt;ll&gt; arr(w);
+</span></span><span style=display:flex><span>		for (int i=0; i&lt;w; i++)
+</span></span><span style=display:flex><span>			cin &gt;&gt; arr[i];
+</span></span><span style=display:flex><span>		sort(arr.begin(), arr.end());
+</span></span><span style=display:flex><span>		prefix = vector&lt;ll&gt;(w, 0);
+</span></span><span style=display:flex><span>		prefix[0] = arr[0];
+</span></span><span style=display:flex><span>		for (int i=1; i&lt;w; i++){
+</span></span><span style=display:flex><span>			prefix[i] = prefix[i-1] + arr[i];
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		ll res = LLONG_MAX;
+</span></span><span style=display:flex><span>		for (int i=0; i&lt;w; i++){
+</span></span><span style=display:flex><span>			ll op1, op2;
+</span></span><span style=display:flex><span>			int p, q;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>			int lo = 0, hi = i;
+</span></span><span style=display:flex><span>			while (lo &lt;= hi){
+</span></span><span style=display:flex><span>				int mid = lo + (hi - lo) / 2;
+</span></span><span style=display:flex><span>				op1 = arr[i] - arr[mid];
+</span></span><span style=display:flex><span>				op2 = n - op1;
+</span></span><span style=display:flex><span>				if (op1 &lt;= op2){
+</span></span><span style=display:flex><span>					p = mid;
+</span></span><span style=display:flex><span>					hi = mid - 1;
+</span></span><span style=display:flex><span>				}
+</span></span><span style=display:flex><span>				else{
+</span></span><span style=display:flex><span>					lo = mid + 1;
+</span></span><span style=display:flex><span>				}
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>			lo = i, hi = w - 1;
+</span></span><span style=display:flex><span>			while(lo &lt;= hi){
+</span></span><span style=display:flex><span>				int mid = lo + (hi - lo) / 2;
+</span></span><span style=display:flex><span>				op1 = arr[mid] - arr[i];
+</span></span><span style=display:flex><span>				op2 = n - op1;
+</span></span><span style=display:flex><span>				if (op1 &lt;= op2){
+</span></span><span style=display:flex><span>					q = mid;
+</span></span><span style=display:flex><span>					lo = mid + 1;
+</span></span><span style=display:flex><span>				}
+</span></span><span style=display:flex><span>				else{
+</span></span><span style=display:flex><span>					hi = mid - 1;
+</span></span><span style=display:flex><span>				}
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>			ll sm1 = 0, sm2 = 0, ans = 0;
+</span></span><span style=display:flex><span>			sm1 = (i - p + 1) * arr[i] - getSum(p, i);
+</span></span><span style=display:flex><span>			sm2 = p * (n - arr[i]) + getSum(0, p-1);
+</span></span><span style=display:flex><span>			ans += sm1 + sm2;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>			sm1 = 0, sm2 = 0;
+</span></span><span style=display:flex><span>			sm1 = getSum(i, q) - (q - i + 1) * arr[i];
+</span></span><span style=display:flex><span>			sm2 = (n + arr[i]) * (w - q - 1) - getSum(q+1, w-1);
+</span></span><span style=display:flex><span>			ans += sm1 + sm2;
+</span></span><span style=display:flex><span>			res = min(res, ans);
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		cout &lt;&lt; &#34;Case #&#34; &lt;&lt; tc &lt;&lt; &#34;: &#34; &lt;&lt; res &lt;&lt; endl;
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></div><div class=tags><ul class=flat><li><a href=/tags/coding-problem>coding-problem</a></li><li><a href=/tags/kickstart>kickstart</a></li></ul></div><div id=disqus_thread></div><script type=text/javascript>(function(){if(window.location.hostname=="localhost")return;var t,e=document.createElement('script');e.type='text/javascript',e.async=!0,t='ink-demo',e.src='//'+t+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(e)})()</script><noscript>Please enable JavaScript to view the</a></noscript><a href=http://disqus.com/ class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><div class="footer wrapper"><nav class=nav><div>2022 © Copyright notice | Powered by <a href=https://github.com/knadh/hugo-ink>Ink</a> theme on <a href=https://gohugo.io>Hugo</a></div></nav></div><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','UA-123-45','auto'),ga('send','pageview'))</script><script async src=https://www.google-analytics.com/analytics.js></script>
+<script>feather.replace()</script></body></html>
