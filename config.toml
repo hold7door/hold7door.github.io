@@ -60,5 +60,10 @@ name = "Twitter"
 icon = "twitter"
 url = "https://twitter.com/AP_zahlen"
 
+[[params.social]]
+name = "LinkedIn"
+icon = "linkedin"
+url = "https://www.linkedin.com/in/arpit-pathak"
+
 [taxonomies]
    tag = "tags"
